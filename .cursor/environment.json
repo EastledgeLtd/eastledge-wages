@@ -1,4 +1,4 @@
 {
-  "install": "npm ci\nnpm run build",
-  "start": "AUTH_SECRET=\"${AUTH_SECRET:-eastledge-dev-secret}\" NODE_ENV=production exec npm run start"
+  "install": "set -euo pipefail\nAPP_DIR=\"${EASTLEDGE_APP_DIR:-$HOME/eastledge-wages}\"\nif [ ! -f \"$APP_DIR/package.json\" ]; then\n  git clone --depth 1 https://github.com/EastledgeLtd/eastledge-wages.git \"$APP_DIR\"\nfi\ncd \"$APP_DIR\"\nnpm ci\nnpm run build",
+  "start": "set -euo pipefail\nAPP_DIR=\"${EASTLEDGE_APP_DIR:-$HOME/eastledge-wages}\"\nif [ ! -f \"$APP_DIR/.next/BUILD_ID\" ]; then\n  if [ ! -f \"$APP_DIR/package.json\" ]; then\n    git clone --depth 1 https://github.com/EastledgeLtd/eastledge-wages.git \"$APP_DIR\"\n  fi\n  cd \"$APP_DIR\"\n  npm ci\n  npm run build\nfi\ncd \"$APP_DIR\"\nexport AUTH_SECRET=\"${AUTH_SECRET:-eastledge-dev-secret}\"\nexport NODE_ENV=production\nexec npm run start"
 }
