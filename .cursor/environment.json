@@ -1,0 +1,4 @@
+{
+  "install": "npm ci\nnpm run build",
+  "start": "AUTH_SECRET=\"${AUTH_SECRET:-eastledge-dev-secret}\" NODE_ENV=production exec npm run start"
+}
